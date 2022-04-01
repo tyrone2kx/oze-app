@@ -2,7 +2,14 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { Box, Input, InputGroup, InputLeftElement, Flex } from '@chakra-ui/react'
 import React from 'react'
 
-const SearchBar = () => {
+
+interface IProps {
+    value: string,
+    onChange: (text: string) => void
+}
+
+
+const SearchBar = ({ value, onChange }: IProps) => {
     return (
         <Flex
             align="center"
@@ -17,8 +24,13 @@ const SearchBar = () => {
                         children={<SearchIcon color='gray.300' />}
                     />
                     <Input
-                        border="1px solid #999" type='tel' placeholder='Phone number'
+                        border="1px solid #999" 
+                        placeholder='Start typing...'
                         focusBorderColor="#999"
+                        value={value}
+                        onChange={e => {
+                            onChange(e.target.value)
+                        }}
                     />
                 </InputGroup>
             </Box>

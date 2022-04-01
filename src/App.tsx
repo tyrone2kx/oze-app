@@ -5,8 +5,19 @@ import {
 import './App.css';
 import ResultList from './components/ResultList';
 import SearchBar from './components/SearchBar'
+import useApiSearch from './hooks/useApiSearch';
 
 function App() {
+
+  const {
+    searchText,
+    searchResults,
+    loading,
+    page,
+    setPage,
+    setSearchText
+} = useApiSearch()
+
   return (
     <>
       <Box w="100%" minH="100vh">
@@ -31,8 +42,13 @@ function App() {
           justify="center"
         >
           <Box w="100%">
-            <SearchBar />
-            <ResultList results={[]} />
+            <SearchBar 
+              value={searchText}
+              onChange={(text: string) => setSearchText(text)}
+            />
+            <ResultList 
+              results={searchResults} 
+            />
           </Box>
         </Flex>
       </Box>
