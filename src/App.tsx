@@ -1,8 +1,9 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
-  Box, Flex, Input, InputGroup, InputLeftElement, Text,
+  Box, Flex, Text,
 } from '@chakra-ui/react';
 import './App.css';
+import Loader from './components/Loader';
 import ResultList from './components/ResultList';
 import SearchBar from './components/SearchBar'
 import useApiSearch from './hooks/useApiSearch';
@@ -15,8 +16,11 @@ function App() {
     loading,
     page,
     setPage,
-    setSearchText
-} = useApiSearch()
+    setSearchText,
+    showPaginationButton,
+    setIsPageChange,
+    isPageChange
+  } = useApiSearch()
 
   return (
     <>
@@ -42,13 +46,26 @@ function App() {
           justify="center"
         >
           <Box w="100%">
-            <SearchBar 
+            <SearchBar
               value={searchText}
-              onChange={(text: string) => setSearchText(text)}
+              onChange={(text: string) => {
+                setIsPageChange(false)
+                setSearchText(text)
+              }}
             />
-            <ResultList 
-              results={searchResults} 
-            />
+
+            {(loading && !isPageChange) ? <Loader />
+              :
+              <ResultList
+                showEmptyState={searchText.length > 0 && !loading}
+                results={searchResults}
+                loading={loading}
+                showButton={showPaginationButton}
+                loadMoreResults={() => {
+                  setIsPageChange(true)
+                  setPage(page + 1)
+                }}
+              />}
           </Box>
         </Flex>
       </Box>
