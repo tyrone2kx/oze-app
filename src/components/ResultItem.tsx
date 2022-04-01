@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ExternalLinkIcon, SearchIcon } from '@chakra-ui/icons'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { Box, Text, Avatar, Flex, Link } from '@chakra-ui/react'
 
 interface IProps {
